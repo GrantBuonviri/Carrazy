@@ -15,13 +15,12 @@ export interface Palette {
 export function readPalette(): Palette {
   const css = getComputedStyle(document.documentElement);
   const v = (name: string, fallback: string) => css.getPropertyValue(name).trim() || fallback;
-  const darkMode = matchMedia("(prefers-color-scheme: dark)").matches;
   return {
-    empty: darkMode ? "#262c37" : "#e9ecf1",
+    empty: v("--tile-empty", "#e9ecf1"),
     light: v("--light", "#9fd3ff"),
     dark: v("--dark", "#1f5fbf"),
     blocker: v("--block", "#d93636"),
-    grid: darkMode ? "#1b2029" : "#ffffff",
+    grid: v("--tile-gap", "#ffffff"),
     valid: "#1fa35c",
     invalid: "#d93636",
     hint: "#f2a900",
@@ -52,9 +51,9 @@ export class Renderer {
   constructor(canvas: HTMLCanvasElement, private size: number) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d")!;
-    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-      this.palette = readPalette();
-    });
+    const refresh = () => (this.palette = readPalette());
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", refresh);
+    new MutationObserver(refresh).observe(document.documentElement, { attributeFilter: ["data-theme"] });
   }
 
   resize(maxPx: number): void {

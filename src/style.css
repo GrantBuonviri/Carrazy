@@ -8,18 +8,33 @@
   --light: #9fd3ff;
   --dark: #1f5fbf;
   --block: #d93636;
+  --tile-empty: #e9ecf1;
+  --tile-gap: #ffffff;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #12151b;
     --panel: #1b2029;
     --text: #e6e9ef;
     --muted: #9aa3b2;
     --border: #2e3542;
     --accent: #5b9bff;
+    --tile-empty: #262c37;
+    --tile-gap: #1b2029;
     color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+  --bg: #12151b;
+  --panel: #1b2029;
+  --text: #e6e9ef;
+  --muted: #9aa3b2;
+  --border: #2e3542;
+  --accent: #5b9bff;
+  --tile-empty: #262c37;
+  --tile-gap: #1b2029;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body {
@@ -31,8 +46,9 @@ body {
 .layout {
   display: flex;
   gap: 20px;
-  padding: 16px;
-  min-height: 100vh;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
   align-items: flex-start;
   justify-content: center;
 }

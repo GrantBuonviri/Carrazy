@@ -41,9 +41,13 @@ function start(seed: number): void {
   state = newGame(seed);
   renderer.clearAnimations();
   renderer.hint = null;
-  const url = new URL(location.href);
-  url.searchParams.set("seed", String(seed));
-  history.replaceState(null, "", url);
+  try {
+    const url = new URL(location.href);
+    url.searchParams.set("seed", String(seed));
+    history.replaceState(null, "", url);
+  } catch {
+    // Some embedded/sandboxed frames refuse history changes; the seed is still shown in the panel.
+  }
   if (dialog.open) dialog.close();
   updateHud(state, best);
   requestDraw();
