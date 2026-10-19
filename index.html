@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrazy</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="board-wrap">
+        <canvas id="board" aria-label="Game board"></canvas>
+        <div id="drag-label" class="drag-label" hidden></div>
+      </section>
+      <aside class="panel">
+        <h1>Carrazy</h1>
+        <p class="rules">
+          Drag a rectangle of <strong>8+ tiles</strong> with no red in it. Tiles go
+          <span class="sw sw-light"></span> light, then <span class="sw sw-dark"></span> dark (conquered).
+          After each turn, 1/7 of the rectangle turns <span class="sw sw-block"></span> red.
+        </p>
+        <dl class="stats">
+          <div><dt>Conquered</dt><dd id="stat-dark">0</dd></div>
+          <div><dt>Board</dt><dd id="stat-pct">0%</dd></div>
+          <div><dt>Turn</dt><dd id="stat-turn">0</dd></div>
+          <div><dt>Light</dt><dd id="stat-light">0</dd></div>
+          <div><dt>Blockers</dt><dd id="stat-block">0</dd></div>
+          <div><dt>Best</dt><dd id="stat-best">–</dd></div>
+        </dl>
+        <div class="buttons">
+          <button id="btn-new" type="button">New game</button>
+          <button id="btn-restart" type="button">Restart seed</button>
+          <button id="btn-hint" type="button">Hint</button>
+        </div>
+        <p class="seed">Seed <code id="seed"></code></p>
+        <p class="tip">Esc cancels a drag.</p>
+      </aside>
+    </main>
+    <dialog id="game-over">
+      <h2>Game over</h2>
+      <p>No rectangle of 8+ tiles fits anymore.</p>
+      <p class="final"><span id="final-score">0</span> tiles conquered</p>
+      <p id="final-detail"></p>
+      <div class="buttons">
+        <button id="btn-over-new" type="button">New game</button>
+        <button id="btn-over-close" type="button">Look at board</button>
+      </div>
+    </dialog>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

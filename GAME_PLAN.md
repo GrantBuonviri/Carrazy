@@ -23,7 +23,7 @@ These are gaps in the current description. Each has a proposed default, and each
 | # | Question | Proposed default |
 |---|----------|------------------|
 | 1 | How is 1/7 rounded? (An 8-tile rectangle gives 8/7 ≈ 1.14.) | `floor(area / 7)`, plus one extra blocker with probability equal to the remainder (`area % 7 / 7`). On average this is exactly 1/7, with no rounding bias. |
-| 2 | Can blockers land on **dark-blue** tiles? If so, the player loses those tiles. | **Yes.** Blockers can land on any tile in the rectangle, which keeps re-covering conquered ground risky. Alternative: blockers only land on non-dark tiles. |
+| 2 | Can blockers land on **dark-blue** tiles? If so, the player loses those tiles. | **Yes (required).** Blockers can land on any tile in the rectangle. The alternative (sparing conquered tiles) was tried and dropped: a player could reselect an all-dark rectangle forever without spawning blockers, so the game would never end. |
 | 3 | Can a rectangle include tiles that are already dark blue? | **Yes.** They stay dark blue. They still count toward the 8-tile minimum and still count when calculating blockers. |
 | 4 | Does "at least 8 tiles" mean the rectangle's total area, or only tiles that aren't conquered? | **Total area** (width × height). |
 | 5 | Is the blocker ratio applied to the full rectangle area? | **Yes**, the full area. |
@@ -160,6 +160,21 @@ tests/
 - Two-player mode where each player has their own color and can't select tiles the other has conquered.
 - An undo button. This doesn't break the randomness, because blockers are seeded; the game could limit it to one undo per game.
 
-## 8. Next step
+## 8. Status
 
-Confirm or adjust the rule decisions in section 2. Then start M0 + M1: scaffold the project and build the tested rules engine.
+- **Done:** M0 (scaffold, CI), M1 (rules engine, 17 tests), M2 (playable game), and parts of M3 (animations, seeds in the URL, hint, Esc to cancel, dark mode) and M4 (simulator).
+- **Not yet:** confirm-before-commit, sound, colorblind palette, keyboard drawing, Playwright smoke test in CI, and all of M5.
+
+### First balancing results (`npm run sim -- 40`)
+
+| Ratio | Random bot | Largest-rect bot | Greedy bot |
+|-------|-----------:|-----------------:|-----------:|
+| 1/5 | 37.7% | 38.8% | 38.6% |
+| 1/6 | 44.4% | 45.6% | 45.2% |
+| 1/7 | 49.5% | 50.6% | 50.3% |
+| 1/8 | 53.6% | 54.4% | 54.4% |
+
+**Design concern:** a bot picking random valid rectangles scores within about 1 point of the smarter bots. Scores land near 50% at 1/7 whatever the strategy, so as the rules stand, skill barely matters. Section 7 ideas worth testing in the simulator to give choices more weight:
+- Make blockers spawn only on tiles that were **light** before the turn, so stacking a second pass is rewarded and blind first passes are punished.
+- Score by turn efficiency or add a turn limit.
+- Scale the blocker ratio with rectangle size (e.g. small rectangles are cheaper).
