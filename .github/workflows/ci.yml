@@ -20,13 +20,13 @@ jobs:
       - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
         with:
           path: dist
 
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     permissions:
       pages: write

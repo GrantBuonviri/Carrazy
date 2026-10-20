@@ -29,7 +29,9 @@ Code layout:
 - `src/sim/` — headless bots for balancing
 - `tests/` — Vitest suites
 
-Pushes to `main` are tested and deployed to GitHub Pages by `.github/workflows/ci.yml`
-(enable Pages with source "GitHub Actions" in the repository settings).
+Play online: https://grantbuonviri.github.io/Carrazy/
+
+Pushes to the default branch are tested and deployed to GitHub Pages by `.github/workflows/ci.yml`
+(Pages must be enabled with source "GitHub Actions" in the repository settings).
 
 See [GAME_PLAN.md](GAME_PLAN.md) for the design plan and open questions.
