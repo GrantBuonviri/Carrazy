@@ -8,7 +8,7 @@ export interface GameConfig {
 }
 
 export const DEFAULT_CONFIG: GameConfig = {
-  size: 50,
+  size: 20,
   minArea: 8,
   blockerRatio: 1 / 7,
 };

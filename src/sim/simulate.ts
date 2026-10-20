@@ -2,7 +2,7 @@
  * Headless balancing harness: plays many games with simple bots and reports
  * score distributions for different blocker ratios.
  *
- *   npm run sim -- [games=200] [size=50]
+ *   npm run sim -- [games=200] [size=20]
  */
 import {
   applyTurn,

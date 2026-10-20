@@ -1,6 +1,6 @@
 # Carrazy
 
-A browser puzzle game about conquering a 50 × 50 grid.
+A browser puzzle game about conquering a 20 × 20 grid.
 
 ## How to play
 
